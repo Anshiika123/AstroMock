@@ -8,3 +8,4 @@ env/
 .vscode/
 .idea/
 *.log
+north_chart_test.svg
