@@ -9,3 +9,7 @@ env/
 .idea/
 *.log
 north_chart_test.svg
+navamsa_chart_test.svg
+.claude/settings.json
+reference_books/
+book_index.json

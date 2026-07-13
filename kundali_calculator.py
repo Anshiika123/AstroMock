@@ -221,6 +221,14 @@ def generate_kundali(
             "nakshatra": get_nakshatra(asc),
         },
         "planets": planets,
+        # Convenience fields — the two things people ask for first:
+        # Lagna = rising sign (None when birth time unknown),
+        # Rashi = Moon sign, with the Moon's nakshatra (birth star).
+        "lagna": None if asc is None else get_sign(asc),
+        "rashi": {
+            "sign": planets["Moon"]["sign"],
+            "nakshatra": planets["Moon"]["nakshatra"],
+        },
         "house_system": "Whole Sign" if not unknown_time else None,
         "ayanamsha_system": "Lahiri",
         "node_type": "mean",
@@ -279,6 +287,11 @@ if __name__ == "__main__":
         assert abs(p["longitude"] - lon) < 0.05, (name, p)
         assert p["sign"] == sign, (name, p)
         assert p["retrograde"] is retro, (name, p)
+
+    # Lagna / Rashi convenience fields
+    assert chart["lagna"] == "Pisces"
+    assert chart["rashi"] == {"sign": "Aquarius",
+                              "nakshatra": {"name": "Dhanishta", "pada": 4}}
 
     # Nakshatra + Whole Sign house spot checks (Pisces lagna)
     assert chart["planets"]["Moon"]["nakshatra"] == {"name": "Dhanishta", "pada": 4}

@@ -90,6 +90,44 @@ def calculate_navamsa(kundali_data: dict) -> dict:
     return result
 
 
+def calculate_navamsa_houses(navamsa_data: dict) -> dict:
+    """Assign Whole Sign house numbers within the Navamsa chart.
+
+    The Navamsa ascendant's sign is house 1; houses count forward by sign,
+    exactly like D-1 Whole Sign but with ascendant_navamsa_sign as the base.
+
+    Args:
+        navamsa_data: output of calculate_navamsa().
+
+    Returns:
+        Same shape, with "house" added per planet:
+        {planet: {"navamsa_sign": str, "house": int}, ...,
+         "ascendant_navamsa_sign": str}
+
+    Raises:
+        ValueError: if ascendant_navamsa_sign is None (unknown_time chart) —
+            houses are undefined without a D-9 lagna.
+    """
+    ascendant_sign = navamsa_data.get("ascendant_navamsa_sign")
+    if ascendant_sign is None:
+        raise ValueError(
+            "Cannot assign Navamsa houses: ascendant_navamsa_sign is None "
+            "(chart was generated with unknown_time=True)."
+        )
+    lagna_index = SIGNS.index(ascendant_sign)
+    result = {}
+    for name, value in navamsa_data.items():
+        if name == "ascendant_navamsa_sign":
+            continue
+        sign = value["navamsa_sign"]
+        result[name] = {
+            "navamsa_sign": sign,
+            "house": (SIGNS.index(sign) - lagna_index) % 12 + 1,
+        }
+    result["ascendant_navamsa_sign"] = ascendant_sign
+    return result
+
+
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
@@ -129,11 +167,25 @@ if __name__ == "__main__":
           {k: v["navamsa_sign"] for k, v in d9.items() if isinstance(v, dict)},
           "| Asc:", d9["ascendant_navamsa_sign"])
 
+    # House assignment: Scorpio D-9 lagna -> hand-computed houses
+    d9h = calculate_navamsa_houses(d9)
+    assert d9h["Moon"] == {"navamsa_sign": "Scorpio", "house": 1}
+    assert d9h["Sun"] == {"navamsa_sign": "Virgo", "house": 11}
+    assert d9h["Mercury"]["house"] == 3 and d9h["Venus"]["house"] == 6
+    assert d9h["Saturn"]["house"] == 12 and d9h["Ketu"]["house"] == 4
+    print("Navamsa houses (Scorpio D-9 lagna):",
+          {k: v["house"] for k, v in d9h.items() if isinstance(v, dict)})
+
     # unknown_time chart -> ascendant_navamsa_sign is None, planets still work
     no_time = generate_kundali("1990-01-01", "12:00", 28.6139, 77.2090,
                                "Asia/Kolkata", unknown_time=True)
     d9_nt = calculate_navamsa(no_time)
     assert d9_nt["ascendant_navamsa_sign"] is None
     assert d9_nt["Moon"]["navamsa_sign"] == d9["Moon"]["navamsa_sign"]
+    try:
+        calculate_navamsa_houses(d9_nt)
+        raise AssertionError("expected ValueError for unknown_time navamsa houses")
+    except ValueError:
+        pass
     print("unknown_time handling ✔")
     print("All navamsa assertions passed.")

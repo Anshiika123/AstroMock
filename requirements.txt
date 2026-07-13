@@ -3,3 +3,6 @@ pyswisseph
 pytz
 geopy
 timezonefinder
+anthropic
+google-generativeai
+python-dotenv
