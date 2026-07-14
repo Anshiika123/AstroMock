@@ -1,0 +1,114 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AstroMock — Understand your chart</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+<div class="app">
+  <div class="topbar">
+    <div class="brand">AstroMock</div>
+    <div class="tagline">Understand your chart</div>
+  </div>
+
+  <!-- 1. Onboarding -->
+  <section id="onboarding" class="onboarding">
+    <div class="onboarding-card">
+      <h1>Understand your chart</h1>
+      <p class="lede">A calm, plain-language read of your Vedic chart — go deeper only when you want to.</p>
+      <form id="onboarding-form">
+        <label>Your name
+          <input type="text" name="display_name" placeholder="Optional, just for the greeting">
+        </label>
+        <label>Date of birth
+          <input type="date" name="date_of_birth" required>
+        </label>
+        <label>Time of birth
+          <input type="time" name="time_of_birth" required>
+        </label>
+        <label class="checkbox-row">
+          <input type="checkbox" name="unsure_of_time"> I'm not sure of the exact time
+        </label>
+        <label>Place of birth
+          <input type="text" name="place_of_birth" placeholder="Mumbai, India" required>
+        </label>
+        <button type="submit" class="btn-primary">Reveal my chart</button>
+      </form>
+      <p class="onboarding-note">We use your birth details to generate a personalized Vedic chart.</p>
+      <p id="onboarding-status" class="status"></p>
+    </div>
+  </section>
+
+  <!-- 2–6. Dashboard -->
+  <main id="dashboard" class="dashboard hidden">
+    <div id="warnings-area"></div>
+
+    <!-- Hero summary -->
+    <section class="hero">
+      <p class="greeting" id="greeting"></p>
+      <h1 class="hero-summary" id="hero-summary"></h1>
+      <button type="button" class="link-btn" id="edit-details">Edit birth details</button>
+    </section>
+
+    <!-- Prediction horizon cards -->
+    <section class="horizon">
+      <h2>Your period</h2>
+      <div class="seg" id="horizon-tabs">
+        <button type="button" data-tf="today" class="active">Today</button>
+        <button type="button" data-tf="2weeks">Next 2 Weeks</button>
+        <button type="button" data-tf="6months">Next 6 Months</button>
+      </div>
+      <div class="card horizon-card">
+        <p class="muted" id="horizon-status">Reading the sky…</p>
+        <div id="horizon-content"></div>
+      </div>
+    </section>
+
+    <!-- Top insights -->
+    <section class="insights">
+      <h2>Top insights</h2>
+      <div class="insight-grid" id="insight-grid"></div>
+    </section>
+
+    <!-- Ask Your Chart -->
+    <section class="ask">
+      <h2>Ask your chart</h2>
+      <div class="seg" id="depth-tabs">
+        <button type="button" data-depth="normal" class="active">Quick</button>
+        <button type="button" data-depth="deep">Deep</button>
+        <button type="button" data-depth="technical">Technical</button>
+      </div>
+      <div class="ask-box">
+        <input type="text" id="question-input" placeholder="e.g. kya mera career acha hoga?">
+        <button type="button" class="btn-ask" id="ask-btn">Ask</button>
+      </div>
+      <div class="suggested-questions" id="suggested-questions"></div>
+      <div id="answer-area"></div>
+    </section>
+
+    <!-- Explore your chart -->
+    <section class="explore">
+      <h2>Explore your chart</h2>
+      <div class="explore-buttons" id="explore-buttons">
+        <button type="button" data-panel="d1">D1 Chart</button>
+        <button type="button" data-panel="d9">D9 Chart</button>
+        <button type="button" data-panel="dasha">Dasha</button>
+        <button type="button" data-panel="transits">Transits</button>
+      </div>
+      <div class="explore-panels">
+        <div class="card panel hidden" id="panel-d1"><h3>D-1 Rasi Chart</h3><div id="chart-d1"></div></div>
+        <div class="card panel hidden" id="panel-d9"><h3>D-9 Navamsa Chart</h3><div id="chart-d9"></div></div>
+        <div class="card panel hidden" id="panel-dasha"><h3>Vimshottari Dasha</h3><div id="dasha-summary"></div></div>
+        <div class="card panel hidden" id="panel-transits"><h3>Current Transits</h3><div id="transit-summary"></div></div>
+      </div>
+    </section>
+
+    <!-- Technical details -->
+    <section class="technical">
+      <details id="technical-details">
+        <summary>Technical details</summary>
+        <div id="technical-content"></div>
+      </details>
+    </section>
+  </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>

@@ -10,7 +10,17 @@
       "Bash(.venv/Scripts/python.exe llm_provider.py)",
       "Bash(.venv/Scripts/python.exe -c ' *)",
       "Bash(../../.venv/Scripts/python.exe -c ' *)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(awk '/^def interpret_ashtakavarga_signals/,/^def [a-z_]+\\\\\\(/' ashtakavarga_calculator.py)",
+      "Bash(awk '{print $1+$2, $3}')",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(command -v chromium-cli)",
+      "Bash(npx --yes chromium-cli --help)",
+      "Bash(npm init *)",
+      "Bash(npm install *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
