@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "astromock-core"
+version = "0.1.0"
+description = "Vedic astrology calculation engine: kundali, navamsa, dasha, transits, house analysis, classical-text retrieval."
+requires-python = ">=3.10"
+dependencies = [
+    "pyswisseph>=2.10.0",
+    "pytz>=2024.1",
+]
+
+[project.optional-dependencies]
+# needed only by location_resolver (geocoding + timezone lookup)
+location = ["geopy>=2.4", "timezonefinder>=6.5"]
+# needed only for one-time PDF indexing when pdftotext is unavailable
+indexing = ["pdfplumber>=0.11"]
+
+[tool.setuptools]
+py-modules = [
+    "kundali_calculator",
+    "navamsa_calculator",
+    "dasha_calculator",
+    "transit_calculator",
+    "house_analyzer",
+    "topic_to_house_mapping",
+    "book_retriever",
+    "interpretation_engine",
+    "kundali_chart",
+    "location_resolver",
+    "horoscope_generator",
+]

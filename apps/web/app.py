@@ -587,8 +587,8 @@ def ask():
 
     Pipeline: geocode -> kundali -> navamsa -> question routed to houses ->
     house analyses + BPHS references -> interpretation LLM (if configured).
-    Without ANTHROPIC_API_KEY the response still carries lagna/rashi and
-    all computed facts, with answer=null and llm_configured=false.
+    Without an API key the response still carries lagna/rashi and all
+    computed facts, with answer=null and llm_configured=false.
     """
     payload = request.get_json(silent=True)
     if payload is None:

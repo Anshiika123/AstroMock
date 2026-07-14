@@ -1,0 +1,5 @@
+# Shared calculation engine (editable install from the monorepo)
+-e ../../packages/core[location]
+
+flask>=3.0
+python-dotenv>=1.0

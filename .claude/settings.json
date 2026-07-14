@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/Scripts/pip.exe install *)",
+      "Bash(cmd /c start north_chart_test.svg)",
+      "Bash(.venv/Scripts/python.exe -c \"import anthropic; print\\('anthropic', anthropic.__version__\\)\")",
+      "Bash(.venv/Scripts/python.exe -c \"import google.generativeai; print\\('google-generativeai installed'\\)\")",
+      "Bash(.venv/Scripts/python.exe -c \"import dotenv; print\\('dotenv installed'\\)\")",
+      "Bash(.venv/Scripts/python.exe -m py_compile llm_provider.py app.py answer_astrology_question.py)",
+      "Bash(.venv/Scripts/python.exe llm_provider.py)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "Bash(../../.venv/Scripts/python.exe -c ' *)",
+      "Bash(git restore *)"
+    ]
+  }
+}

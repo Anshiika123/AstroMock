@@ -1,0 +1,7 @@
+# Shared calculation engine (editable install from the monorepo)
+-e ../core
+
+mcp>=1.28.0
+uvicorn>=0.30
+starlette>=0.37
+tzdata>=2024.1  # IANA timezone data (required on Windows)
